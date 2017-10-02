@@ -1,9 +1,13 @@
 package com.example.store.demo.entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "order_detail")
 public class OrderDetail {
@@ -19,5 +23,13 @@ public class OrderDetail {
     @Column(name = "Cost")
     @NotEmpty
     private Double cost;
+
+    @ManyToOne
+    @JoinColumn(name="product_id")
+    private Product product;
+
+    @ManyToOne
+    @JoinColumn(name="order_id")
+    private Order order;
 
 }

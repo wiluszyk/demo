@@ -1,9 +1,15 @@
 package com.example.store.demo.entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "address")
 public class Address {
@@ -35,5 +41,12 @@ public class Address {
     @Column(name = "number")
     @NotEmpty
     private Integer number;
+
+    @OneToOne
+    @JoinColumn(name="account_id")
+    private Account account;
+
+    @OneToMany(mappedBy="address", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    private List<Account> accounts = new ArrayList<>();
 
 }

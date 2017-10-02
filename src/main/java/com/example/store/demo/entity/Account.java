@@ -1,11 +1,17 @@
 package com.example.store.demo.entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
+import java.util.ArrayList;
+import java.util.List;
 
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "account")
 public class Account {
@@ -31,5 +37,16 @@ public class Account {
     @NotEmpty
     @Digits(fraction = 0, integer = 10)
     private String telephone;
+
+    @OneToOne(mappedBy = "account", cascade=CascadeType.ALL)
+    private Address address;
+
+    @OneToMany(mappedBy="account", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    private List<Order> orders = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name="address_id")
+    private Address addressA;
+
 
 }

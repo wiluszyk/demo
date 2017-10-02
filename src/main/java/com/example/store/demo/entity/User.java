@@ -1,9 +1,13 @@
 package com.example.store.demo.entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "user")
 public class User {
@@ -19,5 +23,8 @@ public class User {
     @Column(name = "password")
     @NotEmpty
     private String password;
+
+    @OneToOne(mappedBy = "user", cascade=CascadeType.ALL)
+    private UserRole userRole;
 
 }
